@@ -2,13 +2,13 @@
 
 # Sample download of large blob file from Google Cloud Storage
 # using (chunked) resumable downloads
+# https://googlecloudplatform.github.io/google-resumable-media-python/latest/google.resumable_media.requests.html#chunked-downloads
 
-import google.auth
-import google.auth.transport.requests as tr_requests
-from google.resumable_media.requests import ChunkedDownload
-from google.oauth2 import service_account
-import urllib3
 import io
+import urllib3
+import google.auth.transport.requests as tr_requests
+from google.oauth2 import service_account
+from google.resumable_media.requests import ChunkedDownload
 
 urllib3.disable_warnings()
 
@@ -37,7 +37,7 @@ download = ChunkedDownload(
 
 fd = open(outfile, 'wb')
 
-while (not download.finished):
+while not download.finished:
   response = download.consume_next_chunk(transport)
   print download.bytes_downloaded
   fd.write(response.content)
